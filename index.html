@@ -26,7 +26,6 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            /* Fondo negro puro */
             background-color: #000000;
         }
 
@@ -48,7 +47,7 @@
             z-index: 10;
         }
 
-        /* Fecha dinámica abreviada */
+        /* Fecha dinámica */
         .date {
             font-size: 21px;
             font-weight: 600;
@@ -58,7 +57,7 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
 
-        /* RELOJ MÁS ANCHO Y TRANSLÚCIDO (Estilo Apple Glass) */
+        /* RELOJ CON MISMO TAMAÑO Y LETRA BLANCA SÓLIDA */
         .time {
             font-size: 135px;
             font-weight: 300;
@@ -70,12 +69,13 @@
             margin-top: 10px;
             margin-bottom: 50px;
 
-            color: rgba(255, 255, 255, 0.15) !important;
-            -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.7);
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.35), 0 4px 15px rgba(0, 0, 0, 0.5);
+            /* Blanco totalmente opaco sin transparencias ni bordes */
+            color: #ffffff !important;
+            -webkit-text-stroke: 0;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-        /* BOTONES INFERIORES REALISTAS DE APPLE */
+        /* BOTONES INFERIORES ESTILO APPLE */
         .bottom-actions {
             position: absolute;
             bottom: calc(env(safe-area-inset-bottom, 15px) + 22px);
@@ -107,7 +107,7 @@
             fill: #ffffff;
         }
 
-        /* Zona secreta superior derecha para activar el truco (+1h / real) */
+        /* Zona secreta superior derecha para cambiar la hora (+1h / real) */
         #secret-trigger {
             position: absolute;
             top: 0;
