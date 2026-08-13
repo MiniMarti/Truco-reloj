@@ -10,8 +10,8 @@
     
     <style>
         :root {
-            /* Tu imagen limpia de ImgBB */
-            --bg-image: url('https://i.ibb.co/KcMYM1B1/image.jpg'); 
+            /* Nuevo fondo de ImgBB */
+            --bg-image: url('https://i.ibb.co/Gfdsgsxh/image.jpg'); 
         }
 
         * {
@@ -28,14 +28,11 @@
         body {
             background-color: #000000;
             background-image: var(--bg-image);
-            
-            /* Encuadre exacto igual a tu captura */
             background-size: cover;
             background-position: center bottom;
             background-repeat: no-repeat;
-            
-            height: 50vh;
-            width: 50vw;
+            height: 100vh;
+            width: 100vw;
             overflow: hidden;
             position: relative;
         }
@@ -54,41 +51,39 @@
             z-index: 10;
         }
 
-        /* Fecha dinámina abreviada */
+        /* Fecha dinámica abreviada */
         .date {
             font-size: 21px;
             font-weight: 600;
             color: #ffffff;
             letter-spacing: -0.3px;
             margin-bottom: 2px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
 
-        /* RELOJ ALARGADO CRISTAL TRANSLÚCIDO (Proporción exacta iOS 17) */
+        /* RELOJ MÁS ANCHO Y TRANSLÚCIDO (Estilo Apple Glass) */
         .time {
-            font-size: 155px;
-            font-weight: 100;
+            font-size: 135px;
+            font-weight: 300;
             display: inline-block;
-            /* Proporción de estiramiento vertical exacta de tu captura */
-            transform: scale(0.68, 1.85);
+            transform: scale(0.88, 1.6);
             transform-origin: top center;
-            letter-spacing: -6px;
-            line-height: 0.78;
-            margin-top: 15px;
-            margin-bottom: 60px;
+            letter-spacing: -3px;
+            line-height: 0.82;
+            margin-top: 10px;
+            margin-bottom: 50px;
 
-            /* Efecto cristal en 3 capas */
-            color: rgba(255, 255, 255, 0.12) !important;
-            -webkit-text-stroke: 2.2px rgba(255, 255, 255, 0.55);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.15) !important;
+            -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.7);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.35), 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-        /* Botones de acción inferiores */
+        /* BOTONES INFERIORES REALISTAS DE APPLE */
         .bottom-actions {
             position: absolute;
             bottom: calc(env(safe-area-inset-bottom, 15px) + 22px);
             width: 100%;
-            padding: 0 45px;
+            padding: 0 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -99,22 +94,23 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(30, 30, 30, 0.55);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 0.5px 0.5px rgba(255, 255, 255, 0.4);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
         }
 
         .action-btn svg {
-            width: 22px;
-            height: 22px;
+            width: 23px;
+            height: 23px;
             fill: #ffffff;
         }
 
-        /* Zona secreta para el truco (Esquina superior derecha) */
+        /* Zona secreta superior derecha para activar el truco (+1h / real) */
         #secret-trigger {
             position: absolute;
             top: 0;
@@ -125,7 +121,7 @@
             background: transparent;
         }
 
-        /* Barra inferior */
+        /* Barra de inicio de iOS */
         .home-indicator {
             position: absolute;
             bottom: 8px;
@@ -147,15 +143,18 @@
         <div class="time" id="clock"></div>
     </div>
 
+    <!-- Botones inferiores realistas de iOS -->
     <div class="bottom-actions">
+        <!-- Linterna estilo iOS -->
         <div class="action-btn">
             <svg viewBox="0 0 24 24">
-                <path d="M6 2h12v3l-4 4v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9L6 5V2zm4 8v3h4v-3h-4z"/>
+                <path d="M12 2C11.45 2 11 2.45 11 3V4H8C6.9 4 6 4.9 6 6V8.5L8.5 12V20C8.5 21.1 9.4 22 10.5 22H13.5C14.6 22 15.5 21.1 15.5 20V12L18 8.5V6C18 4.9 17.1 4 16 4H13V3C13 2.45 12.55 2 12 2ZM12 6C12.55 6 13 6.45 13 7S12.55 8 12 8 11 7.55 11 7 11.45 6 12 6ZM10 10H14V11.2L12.7 13H11.3L10 11.2V10Z"/>
             </svg>
         </div>
+        <!-- Cámara estilo iOS -->
         <div class="action-btn">
             <svg viewBox="0 0 24 24">
-                <path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+                <path d="M12 10.5C10.07 10.5 8.5 12.07 8.5 14C8.5 15.93 10.07 17.5 12 17.5C13.93 17.5 15.5 15.93 15.5 14C15.5 12.07 13.93 10.5 12 10.5ZM12 16C10.9 16 10 15.1 10 14C10 12.9 10.9 12 12 12C13.1 12 14 12.9 14 14C14 15.1 13.1 16 12 16ZM18 7H15.83L14.42 5.46C14.16 5.18 13.78 5 13.39 5H10.61C10.22 5 9.84 5.18 9.58 5.46L8.17 7H6C4.9 7 4 7.9 4 9V17C4 18.1 4.9 19 6 19H18C19.1 19 20 18.1 20 17V9C20 7.9 19.1 7 18 7Z"/>
             </svg>
         </div>
     </div>
@@ -176,7 +175,7 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
-            // Fecha dinámica real que cambia sola cada día
+            // Fecha dinámica
             const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
             const monthNames = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
             
@@ -187,7 +186,7 @@
             document.getElementById('date').textContent = `${dayName} ${dayNum} ${monthName}`;
         }
 
-        // Tocar esquina superior derecha alterna el truco
+        // Tocar la esquina superior derecha alterna la hora
         document.getElementById('secret-trigger').addEventListener('click', () => {
             isShifted = !isShifted;
             updateClock();
