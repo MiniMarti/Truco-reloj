@@ -9,11 +9,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <style>
-        :root {
-            /* Nuevo fondo de ImgBB */
-            --bg-image: url(''); 
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -25,16 +20,17 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        body {
-            background-color: #000000;
-            background-image: var(--bg-image);
-            background-size: 100% auto; /* Ajusta al ancho de pantalla */
-background-position: center center;
-
-            background-repeat: no-repeat;
+        html, body {
             height: 100vh;
             width: 100vw;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
+            /* Fondo negro puro */
+            background-color: #000000;
+        }
+
+        body {
             position: relative;
         }
 
@@ -144,15 +140,12 @@ background-position: center center;
         <div class="time" id="clock"></div>
     </div>
 
-    <!-- Botones inferiores realistas de iOS -->
     <div class="bottom-actions">
-        <!-- Linterna estilo iOS -->
         <div class="action-btn">
             <svg viewBox="0 0 24 24">
                 <path d="M12 2C11.45 2 11 2.45 11 3V4H8C6.9 4 6 4.9 6 6V8.5L8.5 12V20C8.5 21.1 9.4 22 10.5 22H13.5C14.6 22 15.5 21.1 15.5 20V12L18 8.5V6C18 4.9 17.1 4 16 4H13V3C13 2.45 12.55 2 12 2ZM12 6C12.55 6 13 6.45 13 7S12.55 8 12 8 11 7.55 11 7 11.45 6 12 6ZM10 10H14V11.2L12.7 13H11.3L10 11.2V10Z"/>
             </svg>
         </div>
-        <!-- Cámara estilo iOS -->
         <div class="action-btn">
             <svg viewBox="0 0 24 24">
                 <path d="M12 10.5C10.07 10.5 8.5 12.07 8.5 14C8.5 15.93 10.07 17.5 12 17.5C13.93 17.5 15.5 15.93 15.5 14C15.5 12.07 13.93 10.5 12 10.5ZM12 16C10.9 16 10 15.1 10 14C10 12.9 10.9 12 12 12C13.1 12 14 12.9 14 14C14 15.1 13.1 16 12 16ZM18 7H15.83L14.42 5.46C14.16 5.18 13.78 5 13.39 5H10.61C10.22 5 9.84 5.18 9.58 5.46L8.17 7H6C4.9 7 4 7.9 4 9V17C4 18.1 4.9 19 6 19H18C19.1 19 20 18.1 20 17V9C20 7.9 19.1 7 18 7Z"/>
@@ -176,7 +169,6 @@ background-position: center center;
             const minutes = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
-            // Fecha dinámica
             const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
             const monthNames = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
             
@@ -187,7 +179,6 @@ background-position: center center;
             document.getElementById('date').textContent = `${dayName} ${dayNum} ${monthName}`;
         }
 
-        // Tocar la esquina superior derecha alterna la hora
         document.getElementById('secret-trigger').addEventListener('click', () => {
             isShifted = !isShifted;
             updateClock();
