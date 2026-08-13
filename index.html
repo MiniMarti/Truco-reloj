@@ -57,19 +57,17 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
 
-        /* RELOJ CON MISMO TAMAÑO Y LETRA BLANCA SÓLIDA */
+        /* RELOJ CON PROPORCIÓN NATURAL (Sin escalado ni deformación) */
         .time {
-            font-size: 135px;
-            font-weight: 300;
+            font-size: 96px;
+            font-weight: 700;
             display: inline-block;
-            transform: scale(0.88, 1.6);
-            transform-origin: top center;
-            letter-spacing: -3px;
-            line-height: 0.82;
-            margin-top: 10px;
-            margin-bottom: 50px;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-top: 5px;
+            margin-bottom: 20px;
 
-            /* Blanco totalmente opaco sin transparencias ni bordes */
+            /* Blanco sólido */
             color: #ffffff !important;
             -webkit-text-stroke: 0;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
