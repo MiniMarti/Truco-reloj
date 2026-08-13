@@ -57,7 +57,7 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
 
-        /* RELOJ CON PROPORCIÓN NATURAL (Sin escalado ni deformación) */
+        /* RELOJ CON PROPORCIÓN NATURAL Y BLANCO SÓLIDO */
         .time {
             font-size: 96px;
             font-weight: 700;
@@ -67,7 +67,6 @@
             margin-top: 5px;
             margin-bottom: 20px;
 
-            /* Blanco sólido */
             color: #ffffff !important;
             -webkit-text-stroke: 0;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -105,13 +104,24 @@
             fill: #ffffff;
         }
 
-        /* Zona secreta superior derecha para cambiar la hora (+1h / real) */
-        #secret-trigger {
+        /* 1. Zona secreta e invisible arriba a la derecha */
+        #secret-trigger-top {
             position: absolute;
             top: 0;
             right: 0;
             width: 120px;
             height: 100px;
+            z-index: 999;
+            background: transparent;
+        }
+
+        /* 2. Zona secreta e invisible abajo a la derecha */
+        #secret-trigger-bottom {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
             z-index: 999;
             background: transparent;
         }
@@ -131,7 +141,9 @@
 </head>
 <body>
 
-    <div id="secret-trigger"></div>
+    <!-- Las dos zonas secretas invisibles -->
+    <div id="secret-trigger-top"></div>
+    <div id="secret-trigger-bottom"></div>
 
     <div class="lock-screen-header">
         <div class="date" id="date"></div>
@@ -177,14 +189,18 @@
             document.getElementById('date').textContent = `${dayName} ${dayNum} ${monthName}`;
         }
 
-        document.getElementById('secret-trigger').addEventListener('click', () => {
+        function toggleShift() {
             isShifted = !isShifted;
             updateClock();
 
             if (navigator.vibrate) {
                 navigator.vibrate(50);
             }
-        });
+        }
+
+        // Se activa al tocar arriba a la derecha O abajo a la derecha
+        document.getElementById('secret-trigger-top').addEventListener('click', toggleShift);
+        document.getElementById('secret-trigger-bottom').addEventListener('click', toggleShift);
 
         setInterval(updateClock, 1000);
         updateClock();
