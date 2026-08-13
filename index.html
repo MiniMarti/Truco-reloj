@@ -1,165 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Pantalla de Bloqueo</title>
-  
-  <!-- Configuración para guardar como app en iOS (pantalla completa sin interfaz de Safari) -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-touch-callout: none;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lock Screen</title>
+    
+    <!-- Configuración para guardar como app en iOS (pantalla completa sin interfaz de Safari) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <style>
+        :root {
+            /* 1. CONFIGURACIÓN DEL FONDO: Usamos la imagen proporcionada. */
+            --bg-image: url('https://i.ibb.co/XrRm33zJ/f74620f4-d57a-4286-9a2c-9a4f4d2f8e13.jpg'); 
+            
+            /* 2. Color del texto (ajustado para legibilidad sobre el fondo oscuro) */
+            --text-color: #ffffff; 
+            
+            /* 3. Grosor de la hora (Estilo iOS 16+) */
+            --time-font-weight: 800;
+        }
 
-    body {
-      background-color: #000;
-      /* Sustituye la URL por el fondo de pantalla de tu iPhone */
-      background-image: url('https://ibb.co/XrRm33zJ');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      width: 100vw;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: env(safe-area-inset-top, 40px);
-      padding-bottom: env(safe-area-inset-bottom, 20px);
-      overflow: hidden;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* Barra de estado superior */
-    .status-bar {
-      width: 100%;
-      padding: 0 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 600;
-      z-index: 10;
-    }
+        body {
+            background-color: #000;
+            background-image: var(--bg-image);
+            
+            /* --- AJUSTE CRÍTICO PARA FONDO VERTICAL ALARGADO --- */
+            background-size: cover;          /* Llena todo el espacio */
+            background-position: center bottom; /* Centra horizontalmente, alinea abajo */
+            background-repeat: no-repeat;
+            
+            height: 100vh;
+            width: 100vw;
+            color: var(--text-color);
+            overflow: hidden;
+            position: relative;
+        }
 
-    /* Reloj y Fecha estilo iOS */
-    .lock-screen-clock {
-      text-align: center;
-      margin-top: 20px;
-      z-index: 10;
-    }
+        /* --- Contenedor Principal (Reloj y Fecha) --- */
+        .lock-screen-header {
+            position: absolute;
+            /* Bajamos la posición para dejar espacio al notch/isla dinámica */
+            top: env(safe-area-inset-top, 60px); 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+        }
 
-    .date {
-      font-size: 20px;
-      font-weight: 500;
-      letter-spacing: 0.2px;
-      margin-bottom: 5px;
-      text-transform: capitalize;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-    }
+        /* --- Fecha (Estilo iOS 16/17: "Jueves 13 de Agosto") --- */
+        .date {
+            font-size: 21px; /* Tamaño real de iOS */
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-transform: capitalize; 
+            margin-bottom: -15px; /* Empuja la hora hacia arriba */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            opacity: 0.9;
+        }
 
-    .time {
-      font-size: 84px;
-      font-weight: 700;
-      letter-spacing: -2px;
-      line-height: 1;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-      transition: color 0.3s ease;
-    }
+        /* --- Reloj Grande (Estilo iOS 16/17) --- */
+        .time {
+            font-size: 110px; /* Tamaño real masivo */
+            font-weight: var(--time-font-weight);
+            letter-spacing: -6px; /* Letras muy juntas */
+            line-height: 1;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
+            position: relative;
+        }
 
-    /* Punto invisible para activar el truco */
-    #secret-trigger {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      z-index: 999;
-      background: transparent; /* Totalmente transparente */
-    }
+        /* Punto invisible de activación (Arriba a la derecha, sobre la batería) */
+        #secret-trigger {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 80px;
+            z-index: 999;
+            background: transparent;
+        }
 
-    /* Indicador inferior de desbloqueo */
-    .home-indicator {
-      width: 135px;
-      height: 5px;
-      background-color: #ffffff;
-      border-radius: 3px;
-      margin-bottom: 8px;
-    }
-  </style>
+        /* --- Indicador Inferior de Inicio (Línea de deslizar) --- */
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 135px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.6); /* Semitransparente como iOS */
+            border-radius: 3px;
+        }
+
+    </style>
 </head>
 <body>
 
-  <!-- Barra superior (Simulada) -->
-  <div class="status-bar">
-    <span id="small-time">--:--</span>
-    <div>
-      <span>5G</span>
-      <span style="margin-left: 5px;">100%</span>
+    <!-- Zona invisible superior derecha -->
+    <div id="secret-trigger"></div>
+
+    <!-- Contenedor del Reloj y Fecha (Posicionado arriba) -->
+    <div class="lock-screen-header">
+        <div class="date" id="date">Jueves 13 de Agosto</div>
+        <div class="time" id="clock">08:25</div>
     </div>
-  </div>
 
-  <!-- Reloj Principal -->
-  <div class="lock-screen-clock">
-    <div class="date" id="date">Cargando...</div>
-    <div class="time" id="clock">00:00</div>
-  </div>
+    <!-- Línea de deslizar abajo -->
+    <div class="home-indicator"></div>
 
-  <!-- Borde inferior para deslizar -->
-  <div class="home-indicator"></div>
+    <script>
+        // Estado del truco: true = hora adelantada (+1h), false = hora real
+        let isShifted = true;
 
-  <!-- ZONA INVISIBLE DE ACTIVACIÓN (Esquina superior derecha) -->
-  <div id="secret-trigger"></div>
+        function updateClock() {
+            const now = new Date();
+            
+            // Si el truco está activo, sumamos 1 hora a la fecha actual
+            if (isShifted) {
+                now.setHours(now.getHours() + 1);
+            }
 
-  <script>
-    // Estado del truco: true = hora sumada (+1h), false = hora real
-    let isShifted = true;
+            // --- Formatear Hora y Minutos ---
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
-    function updateClock() {
-      const now = new Date();
-      
-      // Si el truco está activo, sumamos 1 hora a la fecha actual
-      if (isShifted) {
-        now.setHours(now.getHours() + 1);
-      }
+            // --- Formatear Fecha (iOS Style) ---
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            let dateString = now.toLocaleDateString('es-ES', options);
 
-      // Formatear Hora y Minutos
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const timeString = `${hours}:${minutes}`;
+            dateString = dateString.replace(/,/, '').replace(/\b\w/g, l => l.toUpperCase()); 
+            dateString = dateString.replace(" De ", " de "); 
 
-      // Formatear Fecha (ej. Jueves, 13 de agosto)
-      const options = { weekday: 'long', day: 'numeric', month: 'long' };
-      const dateString = now.toLocaleDateString('es-ES', options);
+            document.getElementById('date').textContent = dateString;
+        }
 
-      // Actualizar elementos en pantalla
-      document.getElementById('clock').textContent = timeString;
-      document.getElementById('small-time').textContent = timeString;
-      document.getElementById('date').textContent = dateString;
-    }
+        // --- GESTO MÁGICO: Tocar arriba a la derecha ---
+        document.getElementById('secret-trigger').addEventListener('click', () => {
+            isShifted = !isShifted; 
+            updateClock();
 
-    // Al tocar la zona invisible superior derecha, cambiamos el estado
-    document.getElementById('secret-trigger').addEventListener('click', () => {
-      isShifted = !isShifted; // Alterna entre +1 hora y hora real
-      updateClock();
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
 
-      // Pequeña vibración háptica de confirmación si el dispositivo lo soporta
-      if (navigator.vibrate) {
-        navigator.vibrate(50);
-      }
-    });
-
-    // Actualizar reloj cada segundo
-    setInterval(updateClock, 1000);
-    updateClock();
-  </script>
+        // Actualizar reloj cada segundo
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
